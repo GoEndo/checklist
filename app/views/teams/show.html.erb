@@ -1,0 +1,53 @@
+<h1>Team</h1>
+
+<p>
+  Today is <%= Time.now.strftime("%m/%d/%Y") %>
+  <br>
+  <% if @sprints.count > 0 %>
+    <% @sprints.each do |sprint| %>
+      <%= link_to 'Sprint', sprints_path %> <%= sprint.name %><br>
+    <% end %>
+  <% else %>
+    <%= link_to 'New sprint', new_sprint_path %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Team Name:</strong>
+  <%= @team.name %>
+  <br>
+
+  <strong>Team Status:</strong>
+  <%= @team.status %>
+  <br>
+
+  <strong>Team Score:</strong>
+  <%= @team.score %>
+</p>
+
+<h2>Tasks</h2>
+<% if @sprints.count > 0 %>
+  <% @sprints.each do |sprint| %>
+    <strong>Sprint:</strong> <%= sprint.name %>
+    <table class="taskList">
+      <% @tasks.each do |task| %>
+        <tr>
+          <td class="taskName"><strong><%= task.name %></strong></td>
+          <td>
+            <% @taskstatuses = TaskStatus.task_status(@team, sprint, task) %>
+            <% if @taskstatuses.count > 0 %>
+              <% @taskstatuses.each do |taskstatus| %>
+                <%= taskstatus.status %>
+              <% end %>
+            <% else %>
+              <% @taskstatus = TaskStatus.new_task_status(@team, sprint, task) %>
+              <%= @taskstatus.status %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+<% end %>
+
+<%= link_to 'Back', teams_path %>

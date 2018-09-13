@@ -1,0 +1,9 @@
+// Place all the styles related to the tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.listing th.taskHeader {width:200px}
+
+table.taskList tr:nth-child(even) {background: #CCC}
+table.taskList tr:nth-child(odd) {background: #FFF}
+table.taskList td.taskName {width:200px; padding-left: 10px; padding-right: 10px}

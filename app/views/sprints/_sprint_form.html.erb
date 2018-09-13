@@ -1,0 +1,20 @@
+<%= form_with model: @sprint, local: true do |form| %>
+  <%= render 'error_message' %>
+
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+
+    <%= form.label :start %><br>
+    <% if @sprint.start.present? %>
+      <%= datepicker_input form, :start, @sprint.start %>
+    <% else %>
+      <%= datepicker_input form, :start, Time.now.strftime('%Y-%m-%d') %>
+    <% end %>
+
+    <%= form.label :duration %>
+    <%= form.text_field :duration %>
+    days
+
+    <%= form.submit submitLabel, class: "btn btn-primary" %>
+
+<% end %>

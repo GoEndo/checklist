@@ -1,0 +1,25 @@
+<h1>Task Listing</h1>
+
+<%= link_to 'New Task', new_task_path %>
+
+<p></p>
+
+<table class="listing">
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+  <% @tasks.each do |task| %>
+    <tr>
+      <td><%= task.name %></td>
+      <td>
+        <%= link_to 'Edit', edit_task_path(task) %> |
+        <%= link_to 'Destroy', task_path(task),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back', teams_path %>

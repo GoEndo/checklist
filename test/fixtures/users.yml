@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Go Endo
+  email: go_endo@optum.com
+  password_digest: <%= User.digest('password') %>
+
+two:
+  name: Mike Harwerth
+  email: mike_harwerth@optum.com
+  password_digest: <%= User.digest('password') %>

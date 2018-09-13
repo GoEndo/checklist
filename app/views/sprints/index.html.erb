@@ -1,0 +1,35 @@
+<h1>Time Period Listing</h1>
+
+<p>
+  Today is <%= Time.now.strftime("%m/%d/%Y") %>
+</p>
+
+<%= link_to 'New sprint', new_sprint_path %>
+
+<p></p>
+
+<table class="listing">
+  <tr>
+    <th>Name</th>
+    <th>Start</th>
+    <th>Ducation</th>
+    <th>End</th>
+    <th></th>
+  </tr>
+
+  <% @sprints.each do |sprint| %>
+    <tr>
+      <td><%= sprint.name %></td>
+      <td><%= sprint.start %></td>
+      <td><%= sprint.duration %> days</td>
+      <td><%= sprint.end %></td>
+      <td>
+        <%= link_to 'Edit', edit_sprint_path(sprint) %> |
+        <%= link_to 'Destroy', sprint_path(sprint),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to 'Back', teams_path %>
