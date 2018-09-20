@@ -5,7 +5,13 @@
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
     <%= render partial: 'user_form', locals: {submitLabel: "Update User"} %>
+    <div class="gravatar_edit">
+      <%= gravatar_for @user %>
+      <a href="http://gravatar.com/emails" target="_blank">change</a>
+    </div>
   </div>
 </div>
+
+
 
 <%= link_to 'Back', users_path %>
