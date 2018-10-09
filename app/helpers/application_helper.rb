@@ -7,5 +7,12 @@ module ApplicationHelper
     else
       page_title + " | " + base_title
     end
-    end
+  end
+
+  # Time Formatting
+  def format_time(time, timezone)
+    time = time.to_time
+    content_tag(:span, I18n.l(time, format: :long), data: { timezone: timezone, time: time.iso8601 })
+  end
+
 end

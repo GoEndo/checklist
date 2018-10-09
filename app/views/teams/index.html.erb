@@ -1,18 +1,29 @@
 <h1>MnR Team Checklist</h1>
-<p>
-  Today is <%= Time.now.strftime("%m/%d/%Y") %>
-  <br>
-  <% if @sprints.count > 0 %>
-    <% @sprints.each do |sprint| %>
-      <%= link_to sprint.name, sprints_path %> <br>
+<% if current_user&.admin? %>
+  <p>
+    Today is <%= Time.now.strftime("%m/%d/%Y") %>
+    <br>
+    <% if @sprints.count > 0 %>
+      <% @sprints.each do |sprint| %>
+        <%= link_to sprint.name, sprints_path %> <br>
+      <% end %>
+    <% else %>
+      <%= link_to 'New sprint', new_sprint_path %>
     <% end %>
-  <% else %>
-    <%= link_to 'New sprint', new_sprint_path %>
-  <% end %>
-</p>
+  </p>
 
-<%= link_to 'New team', new_team_path %><br>
-<%= link_to 'Tasks', tasks_path %><br>
+  <%= link_to 'New team', new_team_path %><br>
+  <%= link_to 'Tasks', tasks_path %><br>
+<% else %>
+  <p>
+    Today is <%= Time.now.strftime("%m/%d/%Y") %>
+    <br>
+    <% if @sprints.count > 0 %>
+      <% @sprints.each do |sprint| %>
+        <%= sprint.name %> <br>
+      <% end %>
+    <% end %>
+  </p><% end %>
 
 <p></p>
 
@@ -26,32 +37,5 @@
     <% end %>
   </tr>
 
-  <% @teams.each do |team| %>
-    <tr>
-      <td><%= team.name %></td>
-      <td><%= team.status %></td>
-      <td><%= team.score %></td>
-      <% @tasks.each do |task| %>
-        <% @sprints.each do |sprint| %>
-          <td>
-            <% @taskstatuses = TaskStatus.task_status(team, sprint, task) %>
-            <% if @taskstatuses.count > 0 %>
-              <% @taskstatuses.each do |taskstatus| %>
-                <%= taskstatus.status %>
-              <% end %>
-            <% else %>
-              <% @taskstatus = TaskStatus.new_task_status(team, sprint, task) %>
-              <%= @taskstatus.status %>
-            <% end %>
-          </td>
-        <% end %>
-      <% end %>
-      <td>
-        <%= link_to 'Show', team_path(team) %> |
-        <%= link_to 'Edit', edit_team_path(team) %> |
-        <%= link_to 'Destroy', team_path(team),
-                      method: :delete,
-                      data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-  <% end %>
+  <%= render 'team_list' %>
 </table>

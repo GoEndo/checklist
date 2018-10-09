@@ -1,13 +1,19 @@
+
 <tr>
   <td><%= gravatar_for user, size: 30 %></td>
   <td><%= user.name %></td>
   <td><%= user.email %></td>
   <td><%= user.role %></td>
+  <td>
+    <% if !user.activated? %>
+      Inactive
+    <% end %>
+  </td>
   <td></td>
 
   <td>
     <%= link_to 'Show', user_path(user) %>
-    <% if (current_user? user) || (current_user.admin?) %>
+    <% if (current_user? user) || (current_user&.admin?) %>
       |
       <%= link_to 'Edit', edit_user_path(user) %> |
       <%= link_to 'Destroy', user_path(user),

@@ -10,12 +10,16 @@ User.create!(name:  "Go Endo",
              email: "go_endo@optum.com",
              password:              "Mckess01",
              password_confirmation: "Mckess01",
-             role: "admin")
+             role: "admin",
+             activated: true,
+             activated_at: Time.zone.now)
 
 User.create!(name:  "Mike Harwerth",
              email: "mike_harwerth@optum.com",
              password:              "Mckess01",
-             password_confirmation: "Mckess01")
+             password_confirmation: "Mckess01",
+             activated: true,
+             activated_at: Time.zone.now)
 
 Sprint.create(name: "Sprint 18-4-1 1",
               start: DateTime.strptime("09/02/2018 00:00", "%m/%d/%Y %H:%M"),
@@ -48,5 +52,7 @@ Task.create(name:"Do everything else")
   User.create!(name:  name,
                email: email,
                password:              password,
-               password_confirmation: password)
+               password_confirmation: password,
+               activated: true,
+               activated_at: Time.zone.now)
 end

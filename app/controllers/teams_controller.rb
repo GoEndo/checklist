@@ -1,13 +1,13 @@
 class TeamsController < ApplicationController
   def index
     @teams = Team.all
-    @sprints = Sprint.where( "start <= :today AND end >= :today", {today: Time.now})
+    @sprints = Sprint.where( 'start <= :today AND "end" >= :today', {today: Time.now})
     @tasks = Task.all
   end
 
   def show
     @team = Team.find(params[:id])
-    @sprints = Sprint.where( "start <= :today AND end >= :today", {today: Time.now})
+    @sprints = Sprint.where( 'start <= :today AND "end" >= :today', {today: Time.now})
     @tasks = Task.all
   end
 

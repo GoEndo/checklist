@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_20_162528) do
+ActiveRecord::Schema.define(version: 2018_10_01_125446) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "sprints", force: :cascade do |t|
     t.string "name"
@@ -31,9 +34,9 @@ ActiveRecord::Schema.define(version: 2018_09_20_162528) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "team_id"
-    t.integer "sprint_id"
-    t.integer "task_id"
+    t.bigint "team_id"
+    t.bigint "sprint_id"
+    t.bigint "task_id"
     t.index ["sprint_id"], name: "index_task_statuses_on_sprint_id"
     t.index ["task_id"], name: "index_task_statuses_on_task_id"
     t.index ["team_id"], name: "index_task_statuses_on_team_id"
@@ -62,7 +65,13 @@ ActiveRecord::Schema.define(version: 2018_09_20_162528) do
     t.string "password_digest"
     t.string "remember_digest"
     t.string "role"
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "task_statuses", "sprints"
+  add_foreign_key "task_statuses", "tasks"
+  add_foreign_key "task_statuses", "teams"
 end

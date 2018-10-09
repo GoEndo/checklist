@@ -13,9 +13,9 @@
   <%= f.label :password_confirmation, "Confirmation" %>
   <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-  <% if (current_user.admin?) %>
+  <% if (current_user&.admin?) %>
     <%= f.label :role %>
-    <%= f.text_field :role, class: 'form-control' %>
+    <%= f.select :role, ['', 'admin'], class: 'form-control' %>
   <% end %>
 
   <%= f.submit submitLabel, class: "btn btn-primary" %>

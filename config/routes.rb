@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   get 'sessions/new'
   get 'users/new'
+
   resources :sprints do
     resources :task_status
   end
+
   resources :teams do
     resources :task_status
   end
@@ -18,4 +20,5 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
+  resources :account_activations, only: [:edit]
 end

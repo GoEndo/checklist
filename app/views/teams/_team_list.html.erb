@@ -1,0 +1,31 @@
+<% @teams.each do |team| %>
+  <tr>
+    <td><%= team.name %></td>
+    <td><%= team.status %></td>
+    <td><%= team.score %></td>
+    <% @tasks.each do |task| %>
+      <% @sprints.each do |sprint| %>
+        <td>
+          <% @taskstatuses = TaskStatus.task_status(team, sprint, task) %>
+          <% if @taskstatuses.count > 0 %>
+            <% @taskstatuses.each do |taskstatus| %>
+              <%= link_to taskstatus.status, edit_team_task_status_path(team, taskstatus) %>
+            <% end %>
+          <% else %>
+            <% @taskstatus = TaskStatus.new_task_status(team, sprint, task) %>
+            <%= @taskstatus.status %>
+          <% end %>
+        </td>
+      <% end %>
+    <% end %>
+    <td>
+      <%= link_to 'Show', team_path(team) %>
+      <% if current_user&.admin? %>
+        |
+        <%= link_to 'Edit', edit_team_path(team) %> |
+        <%= link_to 'Destroy', team_path(team),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+  </tr>
+<% end %>

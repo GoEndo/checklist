@@ -16,7 +16,20 @@
   <br>
 
   <strong>Role:</strong>
+  <%= @user.role %>
+  <br>
 
+  <strong>Created at:</strong>
+  <%= format_time @user.created_at, "UTC" %>
+  <br>
+
+  <strong>Activated:</strong>
+  <%= @user.activated? %>
+  <br>
+
+  <strong>Activated at:</strong>
+  <%= format_time @user.activated_at, "UTC" %>
+  <br>
 </p>
 
 <%= link_to 'Back', users_path %>
