@@ -36,7 +36,7 @@ module SessionsHelper
 
   # Returns true if the user is logged in, false otherwise.
   def admin?
-    current_user&.admin?
+    current_user&.admin? || User.where(role: 'admin', activated: true).empty?
   end
 
   # Forgets a persistent session.

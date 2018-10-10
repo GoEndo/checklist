@@ -20,7 +20,7 @@ class AccountActivationsController < ApplicationController
 
   # Confirms a logged-in user.
   def logged_in_user_admin
-    unless logged_in? and admin?
+    unless logged_in? && admin?
       store_location
       flash[:danger] = "Please log in as admin."
       redirect_to login_path

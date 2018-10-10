@@ -20,13 +20,16 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      #log_in @user
-      #flash[:success] = "Welcome to the MnR Check-list"
-      #redirect_to root_path
-
-      @user.send_activation_email
-      flash[:info] = "Please check your email to activate your account."
-      redirect_to root_url
+      if User.where(role: 'admin', activated: true).empty?
+        @user.activate
+        log_in @user
+        flash[:success] = "Welcome to the MnR Check-list"
+        redirect_to root_path
+      else
+        @user.send_activation_email
+        flash[:info] = "Please check your email to activate your account."
+        redirect_to root_url
+      end
     else
       render 'new'
     end

@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
   #
   def account_activation(user)
     @user = user
-    mail to: User.where(role: "admin").pluck(:email), subject: "Account activation"
+    mail to: User.where(role: "admin", activated: true).pluck(:email), subject: "Account activation"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
