@@ -5,9 +5,10 @@ class UserMailerTest < ActionMailer::TestCase
     user = users(:michael)
     user.activation_token = User.new_token
     mail = UserMailer.account_activation(user)
+    admin = users(:one)
 
     assert_equal "Account activation", mail.subject
-    assert_equal [user.email], mail.to
+    assert_equal [admin.email], mail.to
     assert_equal ["no-reply-mnr@optum.com"], mail.from
     assert_match user.name,               mail.body.encoded
     assert_match user.activation_token,   mail.body.encoded

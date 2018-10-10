@@ -84,13 +84,17 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_not @other_user.reload.admin?
   end
 
-  test "should allow the admin attribute to be edited via the web when logged in as admin" do
+  test "should allow the admin attribute to be edited via the web when logged in as admin without password" do
     log_in_as(@user)
     assert @user.admin?
-    patch user_path(@user), params: {user: { password: 'password',
-                                                   password_confirmation: 'password',
-                                                   role: "admin" } }
+    patch user_path(@user), params: {user: { role: "admin" } }
     assert @user.reload.admin?
   end
 
+  test "should allow the admin attribute of another user to be edited via the web when logged in as admin without password" do
+    log_in_as(@user)
+    assert @user.admin?
+    patch user_path(@other_user), params: {user: { role: "admin" } }
+    assert @other_user.reload.admin?
+  end
 end
