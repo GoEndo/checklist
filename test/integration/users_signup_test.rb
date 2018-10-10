@@ -46,6 +46,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
     user = assigns(:user)
+    admin = users(:one)
     assert_not user.activated?
     # Try to log in before activation.
     log_in_as(user)
@@ -56,7 +57,11 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     # Valid token, wrong email
     get edit_account_activation_path(user.activation_token, email: 'wrong')
     assert_not is_logged_in?
-    # Valid activation token
+    # Valid activation token, but not admin
+    get edit_account_activation_path(user.activation_token, email: user.email)
+    assert_not user.reload.activated?
+    # Only admin can activate
+    log_in_as(admin)
     get edit_account_activation_path(user.activation_token, email: user.email)
     assert user.reload.activated?
     follow_redirect!
