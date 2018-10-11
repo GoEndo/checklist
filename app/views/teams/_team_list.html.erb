@@ -1,31 +1,67 @@
-<% @teams.each do |team| %>
-  <tr>
-    <td><%= team.name %></td>
-    <td><%= team.status %></td>
-    <td><%= team.score %></td>
-    <% @tasks.each do |task| %>
-      <% @sprints.each do |sprint| %>
-        <td>
-          <% @taskstatuses = TaskStatus.task_status(team, sprint, task) %>
-          <% if @taskstatuses.count > 0 %>
-            <% @taskstatuses.each do |taskstatus| %>
-              <%= link_to taskstatus.status, edit_team_task_status_path(team, taskstatus) %>
-            <% end %>
-          <% else %>
-            <% @taskstatus = TaskStatus.new_task_status(team, sprint, task) %>
-            <%= @taskstatus.status %>
-          <% end %>
-        </td>
-      <% end %>
+<% @sprints.each do |sprint| %>
+  <p>
+    <% if current_user&.admin? %>
+      <%= link_to sprint.name, sprints_path %> (<%= sprint.start %> to <%= sprint.end %>) <%=(sprint.end.to_date - Date.today).to_i %> days left<br>
+    <% else %>
+      <%= sprint.name %> (<%= sprint.start %> to <%= sprint.end %>) <%=(sprint.end.to_date - Date.today).to_i %> days left<br>
     <% end %>
-    <td>
-      <%= link_to 'Show', team_path(team) %>
-      <% if current_user&.admin? %>
-        |
-        <%= link_to 'Edit', edit_team_path(team) %> |
-        <%= link_to 'Destroy', team_path(team),
-                    method: :delete,
-                    data: { confirm: 'Are you sure?' } %></td>
+  </p>
+
+  <table class="listing">
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <% @tasks.each do |task| %>
+        <th class="taskHeader"><%= task.name %></th>
       <% end %>
-  </tr>
+    </tr>
+    <% @teams.each do |team| %>
+      <% status = @statuses.detect { |i| i.team_id == team.id && i.sprint_id == sprint.id } %>
+      <%if !status %>
+        <% status = Status.new_status(team, sprint) %>
+      <% end %>
+      <tr>
+        <td><%= team.name %></td>
+        <td>
+          <% case status.name %>
+          <% when 'Green' %>
+            <div class="bg-success">
+          <% when 'Yellow' %>
+            <div class="bg-warning">
+          <% when 'Red' %>
+            <div class="bg-danger">
+          <% else %>
+            <div>
+          <% end %>
+          <%= status.name %></div>
+        </td>
+        <% @tasks.each do |task| %>
+          <td>
+            <% @taskstatuses = TaskStatus.task_status(team, sprint, task) %>
+            <% if @taskstatuses.count > 0 %>
+              <% @taskstatuses.each do |taskstatus| %>
+                <%= link_to taskstatus.status, edit_team_task_status_path(team, taskstatus) %>
+              <% end %>
+            <% else %>
+              <% @taskstatus = TaskStatus.new_task_status(team, sprint, task) %>
+              <%= link_to taskstatus.status, edit_team_task_status_path(team, @taskstatus) %>
+            <% end %>
+          </td>
+        <% end %>
+        <td>
+          <%= link_to 'Show', team_path(team) %>
+          <% if current_user&.admin? %>
+            |
+            <%= link_to 'Edit', edit_team_path(team) %> |
+            <%= link_to 'Destroy', team_path(team),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+          </tr>
+    <% end %>
+  </table>
+
+  <p></p>
 <% end %>
+
+

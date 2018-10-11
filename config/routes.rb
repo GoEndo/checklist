@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
   resources :tasks
   resources :users
+  resources :statuses
 
   get 'teams/index'
   root 'teams#index'

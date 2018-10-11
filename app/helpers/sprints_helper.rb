@@ -1,7 +1,10 @@
 module SprintsHelper
   def datepicker_input form, field, startValue
-    content_tag :td, :data => {:provide => 'datepicker', 'date-format' => 'yyyy-mm-dd', 'date-autoclose' => 'true'} do
-      form.text_field field, class: 'form-control', placeholder: 'YYYY-MM-DD', value: startValue
-    end
+    form.text_field(field, data: { provide: "datepicker",
+                                   'date-format': 'yyyy-mm-dd',
+                                   'date-autoclose': 'true',
+                                   'date-today-btn': 'linked',
+                                   'date-today-highlight': 'true',
+                                   'value': startValue}).html_safe
   end
 end

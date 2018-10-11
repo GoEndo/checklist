@@ -11,9 +11,8 @@
       <%= datepicker_input form, :start, Time.now.strftime('%Y-%m-%d') %>
     <% end %>
 
-    <%= form.label :duration %>
+    <%= form.label :duration %> (days)
     <%= form.text_field :duration %>
-    days
 
     <%= form.submit submitLabel, class: "btn btn-primary" %>
 

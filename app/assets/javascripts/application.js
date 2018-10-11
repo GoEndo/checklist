@@ -17,3 +17,11 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require_tree .
+
+$( document ).on('turbolinks:load', function() {
+    $("span[data-time]").each(function(index, el) {
+        var date;
+        date = new Date($(el).attr("data-time" || $(el).text()));
+        return $(el).text(date.toString());
+    });
+})

@@ -1,0 +1,30 @@
+<h1>Edit Status</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <p>
+      <strong>Team:</strong>
+      <%= @team.name %>
+      <br>
+
+      <strong>Sprint:</strong>
+      <%= @sprint.name %>
+      <br>
+
+      <strong>Task:</strong>
+      <%= @task.name %>
+      <br>
+    </p>
+    <%= form_for [@team, @taskstatus] do |f| %>
+      <%= render 'error_message' %>
+
+      <%= f.label :status %>
+      <%= f.select :status, ['', 'Incomplete', 'Complete', 'N/A'], class: 'form-control' %>
+
+      <%= f.submit 'Submit', class: "btn btn-primary" %>
+    <% end %>
+
+  </div>
+</div>
+
+<%= link_to 'Back', teams_path %>
